@@ -3,5 +3,5 @@ export type Movie = {
   name: string
   sinopsis: string
   genre: string[]
-  releaseDate: string
+  releaseDate: Date
 }

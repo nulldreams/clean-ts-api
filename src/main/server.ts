@@ -1,10 +1,10 @@
-import { MongoDatabase } from '@/infra/db'
+import { PostgreDatabase } from '@/infra/db'
 import env from '@/main/config/env'
-import { nestApp } from '@/main/config/frameworks'
+import { expressApp } from './config/frameworks/express'
 
 const startServer = async () => {
-  const database = new MongoDatabase()
-  const app = await nestApp()
+  const database = new PostgreDatabase()
+  const app = await expressApp()
 
   database
     .connect()

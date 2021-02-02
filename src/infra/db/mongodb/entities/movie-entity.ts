@@ -1,7 +1,7 @@
 import { Column, Entity, ObjectID, ObjectIdColumn } from 'typeorm'
 
-@Entity('movie')
-export class MongoMovieEntity {
+@Entity('movies')
+export class MongoMoviesEntity {
   @ObjectIdColumn() id: ObjectID
   @Column() imdbId: string
   @Column() poster: string
