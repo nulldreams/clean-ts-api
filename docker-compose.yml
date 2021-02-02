@@ -1,0 +1,39 @@
+version: '3.7'
+services:
+  mongodb:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data_container:/data/db/mongodb
+
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgre_data_container:/data/db/postgresql/data
+    networks:
+      - postgres-network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: 'admin@admin.com'
+      PGADMIN_DEFAULT_PASSWORD: 'admin'
+    ports:
+      - '8000:80'
+    depends_on:
+      - postgres
+    networks:
+      - postgres-network
+
+volumes:
+  mongodb_data_container:
+  postgre_data_container:
+
+networks:
+  postgres-network:
+    driver: bridge
