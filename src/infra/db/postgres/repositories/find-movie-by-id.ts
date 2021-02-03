@@ -1,11 +1,11 @@
 import { FindMovieByIdRepository } from '@/data/contracts'
 import { MovieModel } from '@/data/models'
-import { PostgreMoviesEntity } from '@/infra/db/entities'
+import { PostgresMoviesEntity } from '@/infra/db/entities'
 import { getManager } from 'typeorm'
 
 export class PostgresMoviesRepository implements FindMovieByIdRepository {
   async findById(movieId: string): Promise<MovieModel> {
-    const repository = getManager().getRepository(PostgreMoviesEntity)
+    const repository = getManager().getRepository(PostgresMoviesEntity)
     const movie = await repository.findOne({ where: { id_imdb: movieId } })
 
     return {

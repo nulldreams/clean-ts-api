@@ -1,11 +1,23 @@
-import { PostgreMoviesEntity } from '@/infra/db/entities'
-import { getRepository, MigrationInterface, QueryRunner } from 'typeorm'
+import { Seeder } from '@/infra/contracts'
+import { PostgresMoviesEntity } from '@/infra/db/entities'
+import { getConnection, getRepository } from 'typeorm'
 
-export class SeedMongoData1612304642981 implements MigrationInterface {
-  public async up(queryRunner: QueryRunner): Promise<void> {
-    const hasTable = await queryRunner.hasTable('movies')
-    if (!hasTable) {
-      await queryRunner.query(`
+export class PostgresSeed implements Seeder {
+  async hasTable() {
+    return getConnection().query(`
+    SELECT EXISTS (
+      SELECT FROM pg_tables
+      WHERE  schemaname = 'public'
+      AND    tablename  = 'movies'
+    );
+  `)
+  }
+
+  async run() {
+    const tableExists = await this.hasTable()
+
+    if (!tableExists) {
+      await getConnection().query(`
         CREATE TABLE movies (
           id integer,
           id_imdb varchar(255),
@@ -18,16 +30,15 @@ export class SeedMongoData1612304642981 implements MigrationInterface {
       `)
     }
 
-    await getRepository(PostgreMoviesEntity).save({
+    await getRepository(PostgresMoviesEntity).save({
       id: 1,
       id_imdb: 'tt0133093',
       nome: 'The Matrix',
       genero: 'cyberpunk',
       descricao:
         'Set in the 22nd century, The Matrix tells the story of a computer hacker who joins a group of underground insurgents fighting the vast and powerful computers who now rule the earth.',
-      lancamento: '1992-03-30',
+      lancamento: new Date('1992-03-30'),
       poster: 'https://www.themoviedb.org/t/p/w220_and_h330_face/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg',
     })
   }
-  public async down(queryRunner: QueryRunner): Promise<void> {}
 }

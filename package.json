@@ -6,7 +6,11 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "start:dev": "cross-env NODE_ENV=dev ts-node-dev -r tsconfig-paths/register --respawn -- src/main/server.ts"
+    "start:dev": "cross-env ts-node-dev -r tsconfig-paths/register --respawn -- src/main/server.ts",
+    "nestjs:postgres": "cross-env CURRENT_FRAMEWORK=nestjs CURRENT_DATABASE=postgres ts-node-dev -r tsconfig-paths/register --respawn -- src/main/server.ts",
+    "nestjs:mongodb": "cross-env CURRENT_FRAMEWORK=nestjs CURRENT_DATABASE=mongodb ts-node-dev -r tsconfig-paths/register --respawn -- src/main/server.ts",
+    "express:postgres": "cross-env CURRENT_FRAMEWORK=express CURRENT_DATABASE=postgres ts-node-dev -r tsconfig-paths/register --respawn -- src/main/server.ts",
+    "express:mongodb": "cross-env CURRENT_FRAMEWORK=express CURRENT_DATABASE=mongodb ts-node-dev -r tsconfig-paths/register --respawn -- src/main/server.ts"
   },
   "dependencies": {
     "@nestjs/common": "^7.5.1",

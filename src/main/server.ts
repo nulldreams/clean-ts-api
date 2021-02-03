@@ -1,10 +1,21 @@
-import { PostgreDatabase } from '@/infra/db'
+import { MongoDatabase, PostgresDatabase } from '@/infra/db'
 import env from '@/main/config/env'
-import { expressApp } from './config/frameworks/express'
+
+const chooseDatabase = (dbType: string) => {
+  if (dbType === 'postgres') return new PostgresDatabase()
+  if (dbType === 'mongodb') return new MongoDatabase()
+}
+
+const chooseFramework = (frameworkType: string) => {
+  if (frameworkType === 'express')
+    return import('@/main/config/frameworks/express').then((framework) => framework.expressApp())
+  if (frameworkType === 'nestjs')
+    return import('@/main/config/frameworks/nestjs').then((framework) => framework.nestApp())
+}
 
 const startServer = async () => {
-  const database = new PostgreDatabase()
-  const app = await expressApp()
+  const database = chooseDatabase(env.currentDatabase)
+  const app = await chooseFramework(env.currentFramework)
 
   database
     .connect()

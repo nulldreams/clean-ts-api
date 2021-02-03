@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm'
 
 @Entity('movies')
-export class PostgreMoviesEntity {
+export class PostgresMoviesEntity {
   @PrimaryColumn({ type: 'integer' })
   id: number
 
@@ -17,8 +17,8 @@ export class PostgreMoviesEntity {
   @Column({ type: 'character varying' })
   poster: string
 
-  @Column({ type: 'character varying' })
-  lancamento: string
+  @Column({ type: 'date' })
+  lancamento: Date
 
   @Column({ type: 'character varying' })
   id_imdb: string
