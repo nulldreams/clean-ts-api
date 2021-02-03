@@ -1,2 +1,2 @@
 export * from './mongodb/repositories'
-export * from './postgre/repositories'
+export * from './postgres/repositories'

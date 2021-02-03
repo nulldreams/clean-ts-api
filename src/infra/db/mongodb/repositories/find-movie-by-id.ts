@@ -6,14 +6,11 @@ import { getManager } from 'typeorm'
 export class MongoMoviesRepository implements FindMovieByIdRepository {
   async findById(movieId: string): Promise<MovieModel> {
     const repository = getManager().getRepository(MongoMoviesEntity)
-    const movie = await repository.findOne({ where: { imdbId: movieId } })
+    const { id, imdbId, ...movie } = await repository.findOne({ where: { imdbId: movieId } })
 
     return {
-      genre: movie.genre,
-      name: movie.name,
-      poster: movie.poster,
+      ...movie,
       releaseDate: new Date(movie.releaseDate),
-      sinopsis: movie.sinopsis,
     }
   }
 }

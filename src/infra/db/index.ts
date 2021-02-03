@@ -1,2 +1,2 @@
 export * from './mongodb/connection'
-export * from './postgre/connection'
+export * from './postgres/connection'

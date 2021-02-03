@@ -1,17 +1,18 @@
 import * as dotenv from 'dotenv'
 
-dotenv.config({ path: `.${process.env.NODE_ENV}.env` })
+dotenv.config()
 
 export default {
   port: process.env.PORT || 3000,
-  theMoviedbApiKey: process.env.THE_MOVIEDB_API_KEY,
+  currentDatabase: process.env.CURRENT_DATABASE,
+  currentFramework: process.env.CURRENT_FRAMEWORK,
   databases: {
-    postgre: {
-      host: process.env.POSTGRE_HOST,
-      user: process.env.POSTGRE_USER,
-      password: process.env.POSTGRE_PASSWORD,
-      port: process.env.POSTGRE_PORT,
-      database: process.env.POSTGRE_DATABASE,
+    postgres: {
+      host: process.env.POSTGRES_HOST,
+      user: process.env.POSTGRES_USER,
+      password: process.env.POSTGRES_PASSWORD,
+      port: process.env.POSTGRES_PORT,
+      database: process.env.POSTGRES_DATABASE,
     },
     mongodb: {
       url: process.env.MONGODB_URL,
